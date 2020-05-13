@@ -27,5 +27,5 @@ data:
     consul {
       errors
       cache 30
-      proxy . $CONSUL_DNS_IP
+      forward . $CONSUL_DNS_IP
     }"
