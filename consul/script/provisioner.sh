@@ -4,7 +4,8 @@
 kubectl apply -f ./kubeconfig/helm-rbac.yaml
 
 #Installs Tiller on our cluster
-helm init --service-account=tiller --history-max 300
+#helm init --service-account=tiller --history-max 300
+helm init --service-account tiller --output yaml | sed 's@apiVersion: extensions/v1beta1@apiVersion: apps/v1@' | sed 's@  replicas: 1@  replicas: 1\n  selector: {"matchLabels": {"app": "helm", "name": "tiller"}}@' | kubectl apply -f -
 
 #Deploy Consul with Helm after git clone https://github.com/hashicorp/consul-helm.git
 sleep 60
